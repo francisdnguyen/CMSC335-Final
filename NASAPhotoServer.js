@@ -44,7 +44,7 @@ app.post("/game", async (request, response) => {
     playerName = request.body.name;
     await initializeSpacePhotos();
     correct = Math.floor(Math.random() * 3);
-    //console.log(correct);
+    console.log(correct);
     response.render("game", 
     {
         "photo": spacePhotos[correct].url, 
@@ -104,7 +104,7 @@ app.post("/endGame", async (request, response) => {
 app.post("/getNewPhoto", async (request, response) => {
 
     choice = request.body.choice;
-
+    console.log(`choice is ${choice}`);
     if (choice == correct) {
         score++;
         //alert(`CORRECT ANSWER!`);
@@ -112,9 +112,10 @@ app.post("/getNewPhoto", async (request, response) => {
         //alert(`Incorrect, correct answer is ${spacePhotos[correct].explanation}`);
     }
 
+
     await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
     correct = Math.floor(Math.random() * 3);
-    //console.log(correct);
+    console.log(correct);
     response.render("game", 
     {
         "photo": spacePhotos[correct].url, 
