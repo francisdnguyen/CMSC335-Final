@@ -9,11 +9,24 @@
 </head>
 
 <body>
-	<h1><%- name %></h1>
+    <form action="./addFavorite" method="post">
+        <div class="space">
+        <fieldset class="long">
+            <legend><b class="white-font">Status</b></legend>
+            <label for="photographer" class="white-font">Photographer:</label>
+            <input id="photographer" type="text" class="long" value=<%- photographer %> disabled>
+        </fieldset>
+        </div>
+    </form>
 
-    <div>
-        <%- photos %>
-    </div>
+    <form action="./getNewPhoto" method="get">
+        <div class="space">
+            <input id="nextPhotoButton" type="submit" value="Next Photo">
+        </div>
+    </form>
+    <a href="/">
+        <button id="nextPhotoButton">Back to Home</button>
+    </a>
 
 </body>
 
