@@ -108,7 +108,12 @@ app.get("/getNewPhoto", async (request, response) => {
 
     choice = request.body.choice;
 
-    if ()
+    if (choice == correct) {
+        score++;
+        window.alert(`CORRECT ANSWER!`);
+    } else {
+        window.alert(`Incorrect, correct answer is ${spacePhotos[correct].explanation}`);
+    }
 
     await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
     correct = Math.floor(Math.random() * 3);
@@ -117,7 +122,7 @@ app.get("/getNewPhoto", async (request, response) => {
         "photo": spacePhotos[correct], 
         "description-1": spacePhotos[0].explanation, 
         "description-2": spacePhotos[1].explanation, 
-        "description": spacePhotos[2].explanation
+        "description-3": spacePhotos[2].explanation
     });
 });
 
