@@ -49,5 +49,30 @@ app.post("/addFavorite", async (request, response) => {
     let entry = findOne()
 });
 
+if (process.argv.length != 3) {
+    process.exit(1);
+} else {
+    portNumber = process.argv[2];
+    app.listen(portNumber);
+}
+
+console.log(`Web server started and running at http://localhost:${portNumber}`);
+const prompt = "Stop to shutdown the server: ";
+process.stdout.write(prompt);
+process.stdin.setEncoding("utf8");
+process.stdin.on('readable', () => { //listen to stdin for commands from user
+    const dataInput = process.stdin.read();
+    if (dataInput !== null) {
+        const command = dataInput.trim();
+        if (command === "stop") {
+            console.log("Shutting down the server");
+            process.exit(0);
+        } else {
+            console.log("Invalid command: " + command);
+        }
+        process.stdout.write(prompt);
+        process.stdin.resume();
+    }
+});
 
 main()
