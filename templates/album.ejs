@@ -9,17 +9,23 @@
 </head>
 
 <body>
+
+    <div class="photo-preview">
+        <img name="photo" src=<%- photo %> alt="image"/>
+    </div>
+    
     <form action="./addFavorite" method="post">
         <div class="space">
         <fieldset class="long">
             <legend><b class="white-font">Status</b></legend>
             <label for="photographer" class="white-font">Photographer:</label>
             <input id="photographer" type="text" class="long" value=<%- photographer %> disabled>
+            <div name="status"><%- status %></div>
         </fieldset>
         </div>
     </form>
 
-    <form action="./getNewPhoto" method="get">
+    <form action="./getNewPhotoAlbum" method="get">
         <div class="space">
             <input id="nextPhotoButton" type="submit" value="Next Photo">
         </div>
