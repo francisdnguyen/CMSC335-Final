@@ -54,7 +54,7 @@ app.post("/addFavorite", async (request, response) => {
     let fave = request.body.photo;
     let name = request.body.name;
 
-    let entry = await db.collection.findOne({"name": name});
+    let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": name});
 
     //if the entry was found, we simply update
     if (entry) {
@@ -87,6 +87,7 @@ app.get("/getNewPhoto", async (request, response) => {
     
 });
 
+//gets fresh phots, we pull 20 at a time
 async function initializeSpacePhotos() {
     const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp&count=20");
     spacePhotos = await res.json();
