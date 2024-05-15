@@ -15,30 +15,19 @@
         <img name="photo" src=<%- photo %> alt="image"/>
     </div>
 
-    <form action="./addFavorite" method="post">
-        <div class="space">
-        <fieldset class="long">
-            <legend><b class="white-font">Status</b></legend>
-            <label for="photographer" class="white-font">Photographer:</label>
-            <input id="photographer" type="text" class="long" value=<%- photographer %> disabled>
-        </fieldset>
-        </div>
+    <form action="./getNewPhoto" method="post">
+        <p>Please select your favorite Web language:</p>
+        <input type="radio" id="description-1" name="choice" value="choice-1">
+        <label for="description-1"><%- description-1 %></label><br>
 
-        <div>
-        <fieldset class="long">
-            <legend><b class="white-font">Personal Info</b></legend>
-            <label class="white-font">Name: <input name="name" type="text" class="long"></label>
-            <input id="favoritePhoto" type="submit" value="Add to Favorites"> 
-            <div name="status"><%- status %></div>
-        </fieldset>
-        </div>
-    </form>
+        <input type="radio" id="description-2" name="choice" value="choice-2">
+        <label for="description-2"><%- description-2 %></label><br>
 
-    <form action="./getNewPhoto" method="get">
-        <div class="space">
-            <input id="nextPhotoButton" type="submit" value="Next Photo">
-        </div>
-    </form>
+        <input type="radio" id="description-3" name="choice" value="choice-3">
+        <label for="description-3"><%- description-3 %></label>
+
+        <input type="submit" value="Submit">
+      </form>
     <a href="/">
         <button id="nextPhotoButton">Back to Home</button>
     </a>
