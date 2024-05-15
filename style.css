@@ -49,11 +49,6 @@ label {
     font-size: 20px;
 }   
 
-#space-background {
-    background-image: url('space_background.jpeg');
-    background-size: cover;
-}
-
 #game-background {
     background-image: url('game-background.jpg');
     background-size: cover;
