@@ -3,10 +3,39 @@ html {
 }
 
 .photo-preview {
-    border: 8px double black;
+    border: 8px double white;
     position: relative;
     left: 18%;
-    width: 550px;
-    height: 300px;
+    width: 800px;
+    height: 450px;
     margin-bottom: 5px;
 }
+
+img {
+    width: 800px;
+    height: 450px;
+}
+
+.space {
+    padding-top: 30px;
+}
+
+.long {
+    width: 650px;
+}
+
+.white-font {
+    color: white;
+}
+
+label {
+    font-size: 24px;
+}
+
+#space-background {
+    background-image: url('space_background.jpeg');
+    background-size: cover;
+  }
+
+
+  
