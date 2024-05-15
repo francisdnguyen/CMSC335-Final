@@ -10,10 +10,12 @@ const client = new MongoClient(uri);
 
 let playerName;
 let score = 0;
+let correct = 0
 let spacePhotos;
 let album;
 let albumIndex = 0;
 let photoIndex = 0;
+
 
 const databaseAndCollection = {db: "NASA_Photos", collection: "Favorite_Photos"};
 app.set("views", path.resolve(__dirname, "templates"));
@@ -38,13 +40,16 @@ app.get("/", (request, response) => {
 
 //photo viewer
 app.post("/game", async (request, response) => {
+    score = 0;
     playerName = request.body.name;
-    response.render("game", {"choiceOne": spacePhotos[0].explanation, "choiceTwo": spacePhotos[1].explanation, "choiceThree": spacePhotos[1].explanation});
+    correct = Math.floor(Math.random() * 3);
+    response.render("game", {"photo": spacePhotos[correct], "description-1": spacePhotos[0].explanation, "description-2": spacePhotos[1].explanation, "description": spacePhotos[2].explanation});
 });
 
+app
 
-//look-up
-app.get("/lookUP", (request, response) => {
+//leaderboard
+app.get("/leaderBoard", (request, response) => {
     response.render("lookUp");
 });
 
@@ -100,14 +105,20 @@ app.post("/addFavorite", async (request, response) => {
 
 //get a photo from the 
 app.get("/getNewPhoto", async (request, response) => {
-    photoIndex++;
-    if (photoIndex < 20) {
-        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "No photo saved yet"});
-    } else {
-        await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
-        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "No photo saved yet"});
-    }
-    
+
+    choice = request.body.choice;
+
+    if ()
+
+    await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
+    correct = Math.floor(Math.random() * 3);
+    response.render("game", 
+    {
+        "photo": spacePhotos[correct], 
+        "description-1": spacePhotos[0].explanation, 
+        "description-2": spacePhotos[1].explanation, 
+        "description": spacePhotos[2].explanation
+    });
 });
 
 //gets fresh phots, we pull 3 at a time
