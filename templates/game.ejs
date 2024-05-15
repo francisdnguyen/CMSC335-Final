@@ -8,29 +8,27 @@
     <style> </style>
 </head>
 
-<body id="space-background">
-	<h1 class="white-font">Game</h1>
-    <br>
+<body id="game-background">
     <h1 class="white-font">Score: <%- score %></h1>
 
     <div class="photo-preview">
         <img name="photo" src=<%- photo %> alt="image"/>
     </div>
 
-    <form action="./getNewPhoto" method="post">
-        <p class="white-font">Please choose one that you think is correct:</p>
-        <input type="radio" id="description-1" name="choice" value="0">
+    <form action="./getNewPhoto" method="post" onsubmit=" alert(<%- answer %>)">
+        <p class="white-font-answer">Please choose one that you think is correct:</p>
+        <input type="radio" id="description-1" name="choice" value="1">
         <label class="white-font" for="description-1"><%- descriptionOne %></label><br>
-
-        <input type="radio" id="description-2" name="choice" value="1">
-        <label class="white-font" for="description-2"><%- descriptionTwo %></label><br>
-
-        <input type="radio" id="description-3" name="choice" value="2">
-        <label class="white-font" for="description-3"><%- descriptionThree %></label>
         <br>
+        <input type="radio" id="description-2" name="choice" value="2">
+        <label class="white-font" for="description-2"><%- descriptionTwo %></label><br>
+        <br>
+        <input type="radio" id="description-3" name="choice" value="3">
+        <label class="white-font" for="description-3"><%- descriptionThree %></label>
+        <br><br>
         <input id="nextPhotoButton" type="submit" value="Submit">
     </form>
-
+    
     <form action="./endGame" method="post">
         <a href="/">
             <button id="nextPhotoButton">Back to Home</button>
