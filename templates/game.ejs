@@ -15,7 +15,7 @@
         <img name="photo" src=<%- photo %> alt="image"/>
     </div>
 
-    <form action="./getNewPhoto" method="post" onsubmit="alert(<%- answer %>)">
+    <form action="./getNewPhoto" method="post">
         <p class="white-font-answer">Please choose one that you think is correct:</p>
         <input type="radio" id="description-1" name="choice" value="1">
         <label class="white-font" for="description-1"><%- descriptionOne %></label><br>
@@ -28,7 +28,9 @@
         <br><br>
         <input id="nextPhotoButton" type="submit" value="Submit">
     </form>
-    
+    <br>
+    <div id="answer"></div>
+    <br>
     <form action="./endGame" method="post">
         <a href="/">
             <button id="nextPhotoButton">Back to Home</button>
