@@ -32,12 +32,16 @@ app.get("/", (request, response) => {
 });
 
 //photo viewer
-app.get("/photoViewer", (request, response) => {
-    response.render("photoViewer");
+app.get("/photoViewer", async (request, response) => {
+    const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp");
+    let photo = await res.json();
+    console.log(photo);
+    response.render("photoViewer", {"photo": photo.url, "photographer": photo.copyright});
 });
 
 //album
 app.get("/album", (request, response) => {
+
     response.render("album");
 });
 
@@ -69,8 +73,8 @@ app.post("/addFavorite", async (request, response) => {
 
 //get a photo from the 
 app.get("/getNewPhoto", async (request, response) => {
-    const response = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp");
-    let photo = response.json();
+    const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp");
+    let photo = await res.json();
     response.render("photoViewer", {"photo": photo.url, "photographer": photo.copyright});
 });
 
