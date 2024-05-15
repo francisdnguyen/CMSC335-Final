@@ -8,7 +8,8 @@ const uri = "mongodb+srv://nguyenbrian095:Lockandkey7978@briannguyen.0lehxsr.mon
 const {MongoClient, ServerApiVersion} = require('mongodb');
 const client = new MongoClient(uri);
 
-
+let spacePhotos;
+let photoIndex = 0;
 
 const databaseAndCollection = {db: "NASA_Photos", collection: "Favorite_Photos"};
 app.set("views", path.resolve(__dirname, "templates"));
@@ -33,10 +34,13 @@ app.get("/", (request, response) => {
 
 //photo viewer
 app.get("/photoViewer", async (request, response) => {
-    const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp");
-    let photo = await res.json();
-    console.log(photo);
-    response.render("photoViewer", {"photo": photo.url, "photographer": photo.copyright});
+    await initializeSpacePhotos();
+    response.render("photoViewer", {"photo": spacePhotos[0].url, "photographer": spacePhotos[0].copyright});
+});
+
+app.get("/lookup", (request, response) => {
+
+    response.render("album");
 });
 
 //album
@@ -73,10 +77,21 @@ app.post("/addFavorite", async (request, response) => {
 
 //get a photo from the 
 app.get("/getNewPhoto", async (request, response) => {
-    const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp");
-    let photo = await res.json();
-    response.render("photoViewer", {"photo": photo.url, "photographer": photo.copyright});
+    photoIndex++;
+    if (photoIndex < 20) {
+        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright});
+    } else {
+        await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
+        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright});
+    }
+    
 });
+
+async function initializeSpacePhotos() {
+    const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp&count=20");
+    spacePhotos = await res.json();
+    photoIndex = 0;
+}
 
 if (process.argv.length != 3) {
     process.exit(1);
