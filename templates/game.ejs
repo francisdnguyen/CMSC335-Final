@@ -10,6 +10,8 @@
 
 <body id="space-background">
 	<h1 class="white-font">Game</h1>
+    <br>
+    <h1 class="white-font">Score: <%- score %></h1>
 
     <div class="photo-preview">
         <img name="photo" src=<%- photo %> alt="image"/>
@@ -28,9 +30,12 @@
 
         <input type="submit" value="Submit">
       </form>
-    <a href="/">
-        <button id="nextPhotoButton">Back to Home</button>
-    </a>
+
+    <form action="./endGame" method="post">
+        <a href="/">
+            <button id="nextPhotoButton">Back to Home</button>
+        </a>
+    </form>
 
 
 </body>
