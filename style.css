@@ -50,6 +50,11 @@ label {
     background-size: cover;
 }
 
+#home-background {
+    background-image: url('home3.jpeg');
+    background-size: cover;
+}
+
 #lookUp-title {
     color: white;
     font-size: 50px;
@@ -58,6 +63,22 @@ label {
 .name-font {
     color: white;
     font-size: 30px;
+}
+
+.title-button {
+    font-size: 20px;
+}
+
+.middle-border {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 16px brown groove;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: beige;    ww2
 }
 
 
