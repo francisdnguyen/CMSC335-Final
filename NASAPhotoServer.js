@@ -39,10 +39,10 @@ app.get("/photoViewer", async (request, response) => {
     response.render("photoViewer", {"photo": photo.url, "photographer": photo.copyright});
 });
 
-//album
-app.get("/album", (request, response) => {
+//look-up
+app.get("/lookUP", (request, response) => {
 
-    response.render("album");
+    response.render("lookUp");
 });
 
 //add a favorite photo
