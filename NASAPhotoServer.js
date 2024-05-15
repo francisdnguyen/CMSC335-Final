@@ -1,7 +1,7 @@
 const path = require("path");
 const express = require("express");
 const app = express();
-let portNumber = 2000;
+let portNumber = process.env.PORT || 4000;
 const bodyParser = require("body-parser");
 require("dotenv").config({path: path.resolve(__dirname, '/.env')});
 const uri = "mongodb+srv://nguyenbrian095:Lockandkey7978@briannguyen.0lehxsr.mongodb.net/?retryWrites=true&w=majority";
@@ -24,7 +24,9 @@ app.use(express.static(__dirname));
 
 async function main() {
     // console.log(uri);
+    
     try {
+        app.listen(portNumber);
         await client.connect();
     } catch (e) {
         console.error(e)
@@ -147,11 +149,9 @@ async function initializeSpacePhotos() {
     photoIndex = 0;
 }
 
-if (process.argv.length != 3) {
-    process.exit(1);
-} else {
+if (process.argv.length == 3) {
     portNumber = process.argv[2];
-    app.listen(portNumber);
+    
 }
 
 console.log(`Web server started and running at http://localhost:${portNumber}`);
