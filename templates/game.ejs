@@ -19,16 +19,16 @@
 
     <form action="./getNewPhoto" method="post">
         <p>Please select your favorite Web language:</p>
-        <input type="radio" id="description-1" name="choice" value="1">
-        <label for="description-1"><%- description-1 %></label><br>
+        <input type="radio" id="description-1" name="choice" value="one">
+        <label class="white-font" for="description-1"><%- description-1 %></label><br>
 
-        <input type="radio" id="description-2" name="choice" value="2">
-        <label for="description-2"><%- description-2 %></label><br>
+        <input type="radio" id="description-2" name="choice" value="two">
+        <label class="white-font" for="description-2"><%- description-2 %></label><br>
 
-        <input type="radio" id="description-3" name="choice" value="3">
-        <label for="description-3"><%- description-3 %></label>
-
-        <input type="submit" value="Submit">
+        <input type="radio" id="description-3" name="choice" value="three">
+        <label class="white-font" for="description-3"><%- description-3 %></label>
+        <br>
+        <input id="nextPhotoButton" type="submit" value="Submit">
       </form>
 
     <form action="./endGame" method="post">
