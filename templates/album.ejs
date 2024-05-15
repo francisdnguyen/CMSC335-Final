@@ -17,10 +17,8 @@
     <form action="./addFavorite" method="post">
         <div class="space">
         <fieldset class="long">
-            <legend><b class="white-font">Status</b></legend>
-            <label for="photographer" class="white-font">Photographer:</label>
-            <input id="photographer" type="text" class="long" value=<%- photographer %> disabled>
-            <div name="status"><%- status %></div>
+            <legend><b class="white-font">Other People with Same Favorite Photo</b></legend>
+            <%- photographer %>
         </fieldset>
         </div>
     </form>
@@ -28,6 +26,11 @@
     <form action="./getNewPhotoAlbum" method="get">
         <div class="space">
             <input id="nextPhotoButton" type="submit" value="Next Photo">
+        </div>
+    </form>
+    <form action="./removeFavorite" method="get">
+        <div    >
+            <input id="removeFavoriteButton" type="submit" value="Remove Photo">
         </div>
     </form>
     <a href="/">
