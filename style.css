@@ -51,7 +51,7 @@ label {
 }
 
 #home-background {
-    background-image: url('home3.jpeg');
+    background-image: url('home5.jpg');
     background-size: cover;
 }
 
@@ -74,11 +74,11 @@ label {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 16px cyan groove;
+    border: 8px black solid;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: beige;    ww2
+    background-color: beige;
 }
 
 
