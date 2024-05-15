@@ -1,0 +1,12 @@
+html {
+    font-size: 14px;
+}
+
+.photo-preview {
+    border: 8px double black;
+    position: relative;
+    left: 18%;
+    width: 550px;
+    height: 300px;
+    margin-bottom: 5px;
+}
