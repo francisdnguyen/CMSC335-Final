@@ -46,7 +46,32 @@ app.post("/addFavorite", async (request, response) => {
     let fave = request.body.photo;
     let name = request.body.name;
 
-    let entry = findOne()
+    let entry = await db.collection.findOne({"name": name});
+
+    //if the entry was found, we simply update
+    if (entry) {
+        let favorites = entry.favorites.push(fave);
+        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection)
+        .updateOne({"name": name}, {$set: {"favorites": favorites}});
+        return result;
+    //insert a whole new entry
+    } else {
+        
+        let new_entry = 
+        {
+            "name": name,
+            "favorites": [fave]
+        }
+        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(new_entry);
+        return result;
+    }
+});
+
+//get a photo from the 
+app.get("/getNewPhoto", async (request, response) => {
+    const response = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp");
+    let photo = response.json();
+    response.render("photoViewer", {"photo": photo.url, "photographer": photo.copyright});
 });
 
 if (process.argv.length != 3) {
