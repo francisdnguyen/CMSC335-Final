@@ -9,6 +9,8 @@ const {MongoClient, ServerApiVersion} = require('mongodb');
 const client = new MongoClient(uri);
 
 let spacePhotos;
+let album;
+let albumIndex = 0;
 let photoIndex = 0;
 
 const databaseAndCollection = {db: "NASA_Photos", collection: "Favorite_Photos"};
@@ -46,11 +48,28 @@ app.get("/lookUP", (request, response) => {
 });
 
 //create the album
-app.get("/albumCreation", async (request, response) => {
+app.post("/albumCreation", async (request, response) => {
     let name = request.body.name;
     let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": name});
 
-    //if entry is in the database
+    if (entry) {
+        album = entry.favorites;
+        albumIndex = 0;
+        response.render("album", {"photo": album[albumIndex].url, "photographer": album[albumIndex].copyright, "status": "Favorites found"});
+    } else {
+        response.render("resourceNotFound");
+    }
+});
+
+app.get("/getNewPhotoAlbum", async (request, response) => {
+    albumIndex++;
+    if (albumIndex < album.length) {
+        response.render("album", {"photo": album[albumIndex].url, "photographer": album[albumIndex].copyright, "status": "Favorites found"});
+    } else {
+        albumIndex = 0; //reset to the beginning
+        response.render("album", {"photo": album[albumIndex].url, "photographer": album[albumIndex].copyright, "status": "Favorites found"});
+    }
+    
 });
 
 //add a favorite photo
