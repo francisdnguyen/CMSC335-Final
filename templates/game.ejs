@@ -10,6 +10,8 @@
 
 <body id="game-background">
     <h1 class="white-font">Score: <%- score %></h1>
+    <br>
+    <div id="answer"><%- answer %></div>
 
     <div class="photo-preview">
         <img name="photo" src=<%- photo %> alt="image"/>
@@ -28,9 +30,6 @@
         <br><br>
         <input id="nextPhotoButton" type="submit" value="Submit">
     </form>
-    <br>
-    <div id="answer"><%- answer %></div>
-    <br>
     <form action="./endGame" method="post">
         <a href="/">
             <button id="nextPhotoButton">Back to Home</button>
