@@ -38,13 +38,20 @@ app.get("/", (request, response) => {
     response.render("index");
 });
 
-//photo viewer
+//initialize game
 app.post("/game", async (request, response) => {
     score = 0;
     playerName = request.body.name;
     await initializeSpacePhotos();
     correct = Math.floor(Math.random() * 3);
-    response.render("game", {"photo": spacePhotos[correct], "description-1": spacePhotos[0].explanation, "description-2": spacePhotos[1].explanation, "description": spacePhotos[2].explanation, "score": 0});
+    response.render("game", 
+    {
+        "photo": spacePhotos[correct].url, 
+        "descriptionOne": spacePhotos[0].explanation, 
+        "descriptionTwo": spacePhotos[1].explanation, 
+        "descriptionThree": spacePhotos[2].explanation, 
+        "score": 0
+    });
 });
 
 app
@@ -105,7 +112,7 @@ app.post("/addFavorite", async (request, response) => {
 });
 
 //get a photo from the 
-app.get("/getNewPhoto", async (request, response) => {
+app.post("/getNewPhoto", async (request, response) => {
 
     choice = request.body.choice;
 
