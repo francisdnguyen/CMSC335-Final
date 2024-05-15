@@ -46,9 +46,19 @@ label {
 }
 
 #astro-background {
-    background-image: url('floating-astronaut.jpeg');
+    background-image: url('BARD.jpeg');
     background-size: cover;
-  }
+}
+
+#lookUp-title {
+    color: white;
+    font-size: 50px;
+}
+
+.name-font {
+    color: white;
+    font-size: 30px;
+}
 
 
   
