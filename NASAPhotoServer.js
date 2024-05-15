@@ -44,7 +44,14 @@ app.post("/game", async (request, response) => {
     playerName = request.body.name;
     await initializeSpacePhotos();
     correct = Math.floor(Math.random() * 3);
-    response.render("game", {"photo": spacePhotos[correct], "description-1": spacePhotos[0].explanation, "description-2": spacePhotos[1].explanation, "description": spacePhotos[2].explanation, "score": 0});
+    response.render("game", 
+    {
+        "photo": spacePhotos[correct], 
+        "description-1": spacePhotos[0].explanation, 
+        "description-2": spacePhotos[1].explanation, 
+        "description": spacePhotos[2].explanation, 
+        "score": 0
+    });
 });
 
 app
