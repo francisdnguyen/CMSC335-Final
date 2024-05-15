@@ -9,7 +9,7 @@ const {MongoClient, ServerApiVersion} = require('mongodb');
 const client = new MongoClient(uri);
 
 let playerName;
-let score;
+let score = 0;
 let spacePhotos;
 let album;
 let albumIndex = 0;
@@ -39,19 +39,18 @@ app.get("/", (request, response) => {
 //photo viewer
 app.post("/game", async (request, response) => {
     playerName = request.body.name;
-    await initializeSpacePhotos();
-    response.render("game", {"photo": spacePhotos[0].url, "photographer": spacePhotos[0].copyright, "status": "No photo saved yet"});
+    response.render("game", {"choiceOne": spacePhotos[0].explanation, "choiceTwo": spacePhotos[1].explanation, "choiceThree": spacePhotos[1].explanation});
 });
 
 
 //look-up
 app.get("/lookUP", (request, response) => {
-
     response.render("lookUp");
 });
 
 //intialize game
-app.get("/initializeGame", (request, response) => {
+app.get("/initializeGame", async (request, response) => {
+    await initializeSpacePhotos();
     response.render("newGame");
 });
 
@@ -69,16 +68,6 @@ app.post("/albumCreation", async (request, response) => {
     }
 });
 
-app.get("/getNewPhotoAlbum", async (request, response) => {
-    albumIndex++;
-    if (albumIndex < album.length) {
-        response.render("album", {"photo": album[albumIndex].url, "photographer": album[albumIndex].copyright, "status": "Favorites found"});
-    } else {
-        albumIndex = 0; //reset to the beginning
-        response.render("album", {"photo": album[albumIndex].url, "photographer": album[albumIndex].copyright, "status": "Favorites found"});
-    }
-    
-});
 
 //add a favorite photo
 app.post("/addFavorite", async (request, response) => {
@@ -121,9 +110,9 @@ app.get("/getNewPhoto", async (request, response) => {
     
 });
 
-//gets fresh phots, we pull 20 at a time
+//gets fresh phots, we pull 3 at a time
 async function initializeSpacePhotos() {
-    const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp&count=20");
+    const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=gwZLEsjbQPP3I8TVbwBPXE9dbGjeVcwyfse2b3Tp&count=3");
     spacePhotos = await res.json();
     photoIndex = 0;
 }
