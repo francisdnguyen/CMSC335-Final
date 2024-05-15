@@ -38,10 +38,6 @@ app.get("/photoViewer", async (request, response) => {
     response.render("photoViewer", {"photo": spacePhotos[0].url, "photographer": spacePhotos[0].copyright});
 });
 
-app.get("/lookup", (request, response) => {
-
-    response.render("album");
-});
 
 //look-up
 app.get("/lookUP", (request, response) => {
