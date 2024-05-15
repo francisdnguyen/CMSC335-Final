@@ -12,8 +12,6 @@ let playerName;
 let score = 0;
 let correct = 0
 let spacePhotos;
-let album;
-let albumIndex = 0;
 let photoIndex = 0;
 
 
@@ -44,7 +42,7 @@ app.post("/game", async (request, response) => {
     playerName = request.body.name;
     await initializeSpacePhotos();
     correct = Math.floor(Math.random() * 3);
-    console.log(correct);
+    //console.log(correct);
     response.render("game", 
     {
         "photo": spacePhotos[correct].url, 
@@ -60,7 +58,7 @@ app
 
 //leaderboard
 app.get("/leaderBoard", (request, response) => {
-    response.render("lookUp");
+    response.render("leaderBoard");
 });
 
 //intialize game
@@ -73,8 +71,7 @@ app.get("/initializeGame", async (request, response) => {
 
 //add a favorite photo
 app.post("/endGame", async (request, response) => {
-    let fave = spacePhotos[photoIndex];
-    let name = request.body.name;
+    
 
     let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": name});
 
@@ -114,8 +111,9 @@ app.post("/getNewPhoto", async (request, response) => {
 
 
     await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
+    const prev = correct //save the previous correct answer
     correct = Math.floor(Math.random() * 3);
-    console.log(correct);
+    //console.log(correct);
     response.render("game", 
     {
         "photo": spacePhotos[correct].url, 
@@ -123,7 +121,7 @@ app.post("/getNewPhoto", async (request, response) => {
         "descriptionTwo": spacePhotos[1].explanation, 
         "descriptionThree": spacePhotos[2].explanation, 
         "score": score,
-        "answer": `The correct answer was choice ${correct + 1}`
+        "answer": `The correct answer was choice ${prev + 1}`
     });
 });
 
