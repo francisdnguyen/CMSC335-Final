@@ -35,7 +35,7 @@ app.get("/", (request, response) => {
 //photo viewer
 app.get("/photoViewer", async (request, response) => {
     await initializeSpacePhotos();
-    response.render("photoViewer", {"photo": spacePhotos[0].url, "photographer": spacePhotos[0].copyright});
+    response.render("photoViewer", {"photo": spacePhotos[0].url, "photographer": spacePhotos[0].copyright, "status": "No photo saved yet"});
 });
 
 
@@ -45,18 +45,28 @@ app.get("/lookUP", (request, response) => {
     response.render("lookUp");
 });
 
+//create the album
+app.get("/albumCreation", async (request, response) => {
+    let name = request.body.name;
+    let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": name});
+
+    //if entry is in the database
+});
+
 //add a favorite photo
 app.post("/addFavorite", async (request, response) => {
-    let fave = request.body.photo;
+    let fave = spacePhotos[photoIndex];
     let name = request.body.name;
 
     let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": name});
 
     //if the entry was found, we simply update
     if (entry) {
-        let favorites = entry.favorites.push(fave);
+        const total = entry.favorites.push(fave);
+        //console.log(favorites);
         const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection)
-        .updateOne({"name": name}, {$set: {"favorites": favorites}});
+        .updateOne({"name": name}, {$set: {"favorites": entry.favorites}});
+        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "Photo saved to favorites"});
         return result;
     //insert a whole new entry
     } else {
@@ -67,6 +77,7 @@ app.post("/addFavorite", async (request, response) => {
             "favorites": [fave]
         }
         const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(new_entry);
+        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "Photo saved to favorites"});
         return result;
     }
 });
@@ -75,10 +86,10 @@ app.post("/addFavorite", async (request, response) => {
 app.get("/getNewPhoto", async (request, response) => {
     photoIndex++;
     if (photoIndex < 20) {
-        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright});
+        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "No photo saved yet"});
     } else {
         await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
-        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright});
+        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "No photo saved yet"});
     }
     
 });

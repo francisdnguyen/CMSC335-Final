@@ -12,7 +12,7 @@
 	<h1 class="white-font">Photo Viewer</h1>
 
     <div class="photo-preview">
-        <img id="photo" src=<%- photo %> alt="image"/>
+        <img name="photo" src=<%- photo %> alt="image"/>
     </div>
 
     <form action="./addFavorite" method="post">
@@ -27,9 +27,9 @@
         <div>
         <fieldset class="long">
             <legend><b class="white-font">Personal Info</b></legend>
-            <label class="white-font">Name: <input id="name" type="text" class="long"></label>
+            <label class="white-font">Name: <input name="name" type="text" class="long"></label>
             <input id="favoritePhoto" type="submit" value="Add to Favorites"> 
-            <div id="status"></div>
+            <div name="status"><%- status %></div>
         </fieldset>
         </div>
     </form>
