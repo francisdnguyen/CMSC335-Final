@@ -8,21 +8,38 @@
     <style> </style>
 </head>
 
-<body>
-	<h1>Photo Viewer</h1>
+<body id="space-background">
+	<h1 class="white-font">Photo Viewer</h1>
 
     <div class="photo-preview">
-        <img id="photo" src="./InitialImage.jpg" alt="image" onclick="nextPhoto()"/>
+        <img id="photo" src=<%- photo %> alt="image"/>
     </div>
 
-    <div>
-    <fieldset>
-        <legend><b>Status</b></legend>
-        <label for="displayedPhoto">Photo Being Displayed:</label>
-        <input id="displayedPhoto" type="text" class="long" value="InitialImage.jpg" disabled>
-        <div id="status"></div>
-    </fieldset>
-    </div>
+    <form action="./addFavorite" method="post">
+        <div class="space">
+        <fieldset class="long">
+            <legend><b class="white-font">Status</b></legend>
+            <label for="photographer" class="white-font">Photographer:</label>
+            <input id="photographer" type="text" class="long" value=<%- photographer %> disabled>
+        </fieldset>
+        </div>
+
+        <div>
+        <fieldset class="long">
+            <legend><b class="white-font">Personal Info</b></legend>
+            <label class="white-font">Name: <input id="name" type="text" class="long"></label>
+            <input id="favoritePhoto" type="submit" value="Add to Favorites"> 
+            <div id="status"></div>
+        </fieldset>
+        </div>
+    </form>
+
+    <form action="./getNewPhoto" method="post">
+        <div class="space">
+            <input id="nextPhotoButton" type="button" value="Next Photo">
+        </div>
+    </form>
+
 
 </body>
 
