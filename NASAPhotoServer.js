@@ -43,10 +43,10 @@ app.get("/lookup", (request, response) => {
     response.render("album");
 });
 
-//album
-app.get("/album", (request, response) => {
+//look-up
+app.get("/lookUP", (request, response) => {
 
-    response.render("album");
+    response.render("lookUp");
 });
 
 //add a favorite photo

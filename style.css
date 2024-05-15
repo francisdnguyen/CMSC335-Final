@@ -32,8 +32,21 @@ label {
     font-size: 24px;
 }
 
+#nextPhotoButton {
+    font-size: 30px;
+}   
+
+#favoritePhoto {
+    font-size: 20px;
+}   
+
 #space-background {
     background-image: url('space_background.jpeg');
+    background-size: cover;
+}
+
+#astro-background {
+    background-image: url('floating-astronaut.jpeg');
     background-size: cover;
   }
 
