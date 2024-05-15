@@ -15,7 +15,7 @@ let spacePhotos;
 let photoIndex = 0;
 
 
-const databaseAndCollection = {db: "NASA_Photos", collection: "Favorite_Photos"};
+const databaseAndCollection = {db: "NASA_Photos", collection: "highScores"};
 app.set("views", path.resolve(__dirname, "templates"));
 app.use(bodyParser.urlencoded({extended:false}));
 app.set("view engine", "ejs");
@@ -42,7 +42,7 @@ app.post("/game", async (request, response) => {
     playerName = request.body.name;
     await initializeSpacePhotos();
     correct = Math.floor(Math.random() * 3);
-    //console.log(correct);
+    console.log(correct + 1);
     response.render("game", 
     {
         "photo": spacePhotos[correct].url, 
@@ -57,8 +57,19 @@ app.post("/game", async (request, response) => {
 app
 
 //leaderboard
-app.get("/leaderBoard", (request, response) => {
-    response.render("leaderBoard");
+app.get("/leaderBoard", async (request, response) => {
+
+    const topScores = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).aggregate([
+        {$sort: {"highScores": -1}}
+    ]).toArray();
+    //console.log(topScores);
+    //const topScores = res.json(); 
+    let table = "<table border =\"1\"><th>Player</th><th>High Score</th>";
+    for (player of topScores) {
+        table += `<tr><td>${player.name}</td><td>${player.highScore}</td></tr>`;
+    }
+    table += "</table>";
+    response.render("leaderBoard", {"playerTable": table});
 });
 
 //intialize game
@@ -69,30 +80,34 @@ app.get("/initializeGame", async (request, response) => {
 
 
 
-//add a favorite photo
+//end the game and save your score
 app.post("/endGame", async (request, response) => {
     
 
-    let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": name});
+    let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": playerName});
 
     //if the entry was found, we simply update
     if (entry) {
-        const total = entry.favorites.push(fave);
-        //console.log(favorites);
-        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection)
-        .updateOne({"name": name}, {$set: {"favorites": entry.favorites}});
-        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "Photo saved to favorites"});
-        return result;
+        const currentHighScore = entry.highScore;
+        if (currentHighScore < score) {
+            const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection)
+            .updateOne({"name": playerName}, {$set: {"highScore": score}});
+            response.render("index");
+            return result;
+        } else {
+            response.render("index");
+        }
+        
     //insert a whole new entry
     } else {
         
         let new_entry = 
         {
-            "name": name,
-            "favorites": [fave]
+            "name": playerName,
+            "highScore": score
         }
         const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(new_entry);
-        response.render("photoViewer", {"photo": spacePhotos[photoIndex].url, "photographer": spacePhotos[photoIndex].copyright, "status": "Photo saved to favorites"});
+        response.render("index");
         return result;
     }
 });
@@ -113,7 +128,7 @@ app.post("/getNewPhoto", async (request, response) => {
     await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
     const prev = correct //save the previous correct answer
     correct = Math.floor(Math.random() * 3);
-    //console.log(correct);
+    console.log(correct + 1);
     response.render("game", 
     {
         "photo": spacePhotos[correct].url, 
