@@ -8,6 +8,8 @@ const uri = "mongodb+srv://nguyenbrian095:Lockandkey7978@briannguyen.0lehxsr.mon
 const {MongoClient, ServerApiVersion} = require('mongodb');
 const client = new MongoClient(uri);
 
+let playerName;
+let score;
 let spacePhotos;
 let album;
 let albumIndex = 0;
@@ -35,9 +37,10 @@ app.get("/", (request, response) => {
 });
 
 //photo viewer
-app.get("/photoViewer", async (request, response) => {
+app.post("/game", async (request, response) => {
+    playerName = request.body.name;
     await initializeSpacePhotos();
-    response.render("photoViewer", {"photo": spacePhotos[0].url, "photographer": spacePhotos[0].copyright, "status": "No photo saved yet"});
+    response.render("game", {"photo": spacePhotos[0].url, "photographer": spacePhotos[0].copyright, "status": "No photo saved yet"});
 });
 
 
@@ -45,6 +48,11 @@ app.get("/photoViewer", async (request, response) => {
 app.get("/lookUP", (request, response) => {
 
     response.render("lookUp");
+});
+
+//intialize game
+app.get("/initializeGame", (request, response) => {
+    response.render("newGame");
 });
 
 //create the album
