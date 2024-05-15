@@ -44,13 +44,15 @@ app.post("/game", async (request, response) => {
     playerName = request.body.name;
     await initializeSpacePhotos();
     correct = Math.floor(Math.random() * 3);
+    console.log(correct);
     response.render("game", 
     {
         "photo": spacePhotos[correct].url, 
         "descriptionOne": spacePhotos[0].explanation, 
         "descriptionTwo": spacePhotos[1].explanation, 
         "descriptionThree": spacePhotos[2].explanation, 
-        "score": 0
+        "score": 0,
+        "answer": ""
     });
 });
 
@@ -67,23 +69,10 @@ app.get("/initializeGame", async (request, response) => {
     response.render("newGame");
 });
 
-//create the album
-app.post("/albumCreation", async (request, response) => {
-    let name = request.body.name;
-    let entry = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne({"name": name});
-
-    if (entry) {
-        album = entry.favorites;
-        albumIndex = 0;
-        response.render("album", {"photo": album[albumIndex].url, "photographer": album[albumIndex].copyright, "status": "Favorites found"});
-    } else {
-        response.render("resourceNotFound");
-    }
-});
 
 
 //add a favorite photo
-app.post("/addFavorite", async (request, response) => {
+app.post("/endGame", async (request, response) => {
     let fave = spacePhotos[photoIndex];
     let name = request.body.name;
 
@@ -118,19 +107,22 @@ app.post("/getNewPhoto", async (request, response) => {
 
     if (choice == correct) {
         score++;
-        window.alert(`CORRECT ANSWER!`);
+        //alert(`CORRECT ANSWER!`);
     } else {
-        window.alert(`Incorrect, correct answer is ${spacePhotos[correct].explanation}`);
+        //alert(`Incorrect, correct answer is ${spacePhotos[correct].explanation}`);
     }
 
     await initializeSpacePhotos(); //we have ran out of photos to view so get new photos
     correct = Math.floor(Math.random() * 3);
+    //console.log(correct);
     response.render("game", 
     {
-        "photo": spacePhotos[correct], 
-        "description-1": spacePhotos[0].explanation, 
-        "description-2": spacePhotos[1].explanation, 
-        "description-3": spacePhotos[2].explanation
+        "photo": spacePhotos[correct].url, 
+        "descriptionOne": spacePhotos[0].explanation, 
+        "descriptionTwo": spacePhotos[1].explanation, 
+        "descriptionThree": spacePhotos[2].explanation, 
+        "score": score,
+        "answer": `The correct answer was choice ${correct}`
     });
 });
 
